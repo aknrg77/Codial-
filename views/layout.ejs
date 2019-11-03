@@ -7,12 +7,12 @@
         <%- style -%>
     </head>
     <body>
-    <%- include('_header.js'); -%>
-
-        <%- body %>
-
-        <%- script -%>
-    <%- include('_footer.js'); -%>
+    <%- include('_header.ejs'); -%>
+        <main id= 'layout-main'>
+            <%- body %>
+        </main>
+    <%- script -%>
+    <%- include('_footer.ejs'); -%>
     </body>
 
 </html>

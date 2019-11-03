@@ -1,0 +1,35 @@
+body{
+    text-align: center;
+
+}
+#footer-div{
+    height: 10%;
+    position: relative;
+    
+    background-color:  rgb(57, 10, 102);
+            h3{
+                color:white;
+                position: absolute;
+                text-align: left;
+                margin-left: 2%;
+                
+            }
+            ul{
+                list-style-type: none;
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+                }
+                li {
+                    position: relative;
+                    right: 43%;
+                    float: right;
+                         a {
+                             display: block;
+                            color: white;
+                            text-align: center;
+                            padding: 16px;
+                            text-decoration: none;
+                            }
+                    }
+}

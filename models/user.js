@@ -16,7 +16,8 @@ var userSchema = new mongoose.Schema({
     }
 
 },{
-    timestamps:true
+    // for making an update and new datas in the schemas
+    timestamps:true  
 });
 
 var User = mongoose.model('User',userSchema);
