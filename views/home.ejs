@@ -5,7 +5,7 @@
 
         <h4>Posts</h4>
         <form action="/posts/create" id="new-post-form" method="POST">
-                <textarea name= "content" id= "" cols ="30" row="3" placeholder="type here...">
+                <textarea name= "content" id= "" cols ="30" row="3" placeholder="type here..." required>
 
                 </textarea>
                 <input type="submit" value="Post">
@@ -21,12 +21,40 @@
                                                 <%=i.user.name%>        
                                         </small>
                                         </p>
+                                <div class="post-comments">
+                                        <form action ='/comments/create' method="POST">
+                                                <input type ="text" name = "content" placholder="Type here to add Comment" required>
+                                                <input type="hidden" name="postid" value="<%=i._id%>">
+                                                <input type="submit" value="Add Comment">
+                                                
+                                        </form>
+                                
+                                <div class = "post-comments-lists">
+                                        <ul id="post-comments-<%=i._id %>"
+                                                
+                                                <% for (comment of i.comments){%>
+                                                        <p>
+                                                                <%= comment.content%>
+                                                                <br>
+                                                                <small>
+                                                                        <%= comment.user.name%>
+                                                                </small>
+                                                        </p>
+
+                                                <%}%>
+                                                
+                                                
+                                        </ul>
+                                        
+                                </div>
+                                </div>
                                 </li>
                         <%}%>
+                <%}%>
+
                 </ul>
         </div>
 
 </section>
 
 
-<%}%>
