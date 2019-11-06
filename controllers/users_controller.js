@@ -69,34 +69,28 @@ module.exports.signin = function (req,res){
     });
 }
 //rendering create (Sign Up)
-module.exports.create = function(req,res){
+module.exports.create = async function(req,res){
 
-  
+  try{
     if(req.body.password != req.body.confirm_password)
     {
         return res.redirect('back');
     }
 
-    User.findOne({email:req.body.email},function(err,user){
-        if(err){console.log('error finding in user in signing up');return ;}
-
-        if(!user){
-            User.create(req.body,function(err,user){
-                if(err){
-                    console.log('error creating user while signing up');
-                    return ;
-                }
-
-                return res.redirect('/users/signin');
-
-            })
-        }
-        else{
-            res.redirect('back');
-        }
-    });
+    let user = await User.findOne({email:req.body.email});
+    if(!user){
+        await User.create(req.body);
+            return res.redirect('/users/signin');
+    }
+    else{
+        res.redirect('back');
+    }
+  }catch(err){
+      console.log('Error',err);
+  }
 
 }
+
 
 //rendering createSession (Sign IN)
 module.exports.createSession = function(req,res){
