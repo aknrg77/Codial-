@@ -3,11 +3,40 @@ const User = require('../models/user');
 
 
 module.exports.profile = function (req,res){
-
-    return res.render("user_profile",{
-        title:"user profile"
+    User.findById(req.params.id,function(err,user){
+        if(err){
+            console.log('Error in finding the user');
+        }
+        return res.render("user_profile",{
+            title:"user profile",
+            profile_user:user
+        });
     });
+  
 }
+
+
+
+
+//Updating the profile page by using User.findByIdAndUpdate
+
+module.exports.update = function(req,res){
+    if(req.user.id == req.params.id){
+        User.findByIdAndUpdate(req.params.id,req.body,function(err){
+            if(err){
+                console.log('Unsuccesfull in updating');
+            }
+            return res.redirect('back');
+        });
+ 
+    }
+    else{
+        return res.status(401).send('Unauthorized');
+    }
+
+
+}
+
 
 module.exports.contact = function (req,res){
     return res.render("user_contact",{

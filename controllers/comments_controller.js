@@ -26,3 +26,29 @@ module.exports.create = function(req,res){
     });
 
 }
+
+// deleting a specific a comment 
+module.exports.destroy = function (req,res){
+    Comment.findById(req.params.id,function(err,comment){
+        if(err){
+            console.log('Error in finding Post');
+        }
+        //deleting his / her comment only
+        if(comment.user = req.user.id){
+            // fetching postid and further fetching comment in the commentsArray to delete the COMMENT fully
+            let postIdToDeleteComment = comment.postid;
+            comment.remove();
+            Post.findByIdAndUpdate(postIdToDeleteComment, {  $pull : {comments:req.params.id}  },function(err,post){
+                if(err){
+                    console.log('Error in finding the comment');
+                }
+                return res.redirect('back');
+            });
+        }
+        else{
+            return res.redirect('back');
+        }
+
+    });
+
+}
