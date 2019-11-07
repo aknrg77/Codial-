@@ -94,6 +94,7 @@ module.exports.create = async function(req,res){
 
 //rendering createSession (Sign IN)
 module.exports.createSession = function(req,res){
+    req.flash('success','Logged in Succesfully'); // flash messeage
     return res.redirect('/');
 
 }
@@ -102,13 +103,13 @@ module.exports.createSession = function(req,res){
 //controller of sign out
 
 module.exports.signout = function(req,res){
-    if(req.isAuthenticated()){
-        res.clearCookie('codial');
-        return res.redirect('/users/signin');
-    }
-    else{
-        return res.redirect('/users/signin');
-    }
     // or using inbuilt function of passport.js
-    //req.logout();
+    req.logout();
+    req.flash('success','Logged Out Succesfully'); // flash messeage
+    return res.redirect('/users/signin');
+    // if(req.isAuthenticated()){
+    //     res.clearCookie('codial');
+    //     return res.redirect('/users/signin');
+    // }
+    // or using inbuilt function of passport.js
 }
