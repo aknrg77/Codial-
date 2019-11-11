@@ -2,13 +2,27 @@ const Post = require('../models/post');
 const Comment = require('../models/comment'); 
 
 module.exports.create = async function(req,res){
+
     try{
-            await Post.create({
+            let post = await Post.create({
             content:req.body.content,
             user:req.user._id
         });
-        return res.redirect('back');
 
+        //checking if it is a AJAX request 
+        if(req.xhr){
+            return res.status(200).json({
+                data:{
+                    post:post
+                },
+                message : "Post Created"
+            });
+        }
+
+
+
+        req.flash('success','Post Published'); // flash messege
+        return res.redirect('back');
 
     }catch(err){
     console.log('Error',err);
@@ -29,13 +43,25 @@ module.exports.destroy = async function(req,res){
 
         // deletes all comments
         await Comment.deleteMany({postid:req.params.id});
+
+        //Handling AJAX request 
+        if(req.xhr){
+            return res.status(200).json({
+                data:{
+                    post_id:req.params.id
+                },
+                message : "Post Deleted"
+            });
+
+        }
+
         return res.redirect('back');
     }
     else{
         return res.redirect('back');
     }
 } catch(err){
-    console.log('Error',error);
+    console.log('Error',err);
 }
 
 
