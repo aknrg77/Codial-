@@ -1,6 +1,6 @@
 const User = require('../models/user');
-
-
+const fs = require('fs');
+const path = require('path');
 
 module.exports.profile = function (req,res){
     User.findById(req.params.id,function(err,user){
@@ -20,20 +20,62 @@ module.exports.profile = function (req,res){
 
 //Updating the profile page by using User.findByIdAndUpdate
 
-module.exports.update = function(req,res){
-    if(req.user.id == req.params.id){
-        User.findByIdAndUpdate(req.params.id,req.body,function(err){
-            if(err){
-                console.log('Unsuccesfull in updating');
-            }
-            return res.redirect('back');
-        });
+module.exports.update = async function(req,res){
+    // if(req.user.id == req.params.id){
+    //     User.findByIdAndUpdate(req.params.id,req.body,function(err){
+    //         if(err){
+    //             console.log('Unsuccesfull in updating');
+    //         }
+    //         return res.redirect('back');
+    //     });
  
-    }
-    else{
+    // }
+    // else{
+    //    
+    // }
+
+    if(req.user.id == req.params.id){
+        try{
+
+            let user = await User.findByIdAndUpdate(req.params.id);
+            User.uploadedAvatar(req,res,function(err){
+                if(err){
+                    console.log('******Multer Error',err);
+                }
+                user.name = req.body.name;
+                user.email = req.body.email;
+
+                if(req.file){
+
+                    // if the avatar is present then delete the avatar or replace it with the previous
+                    if(user.avatar){
+                        fs.unlinkSync(path.join(__dirname, '..',user.avatar));
+                        //TODO
+                    }
+
+
+                    user.avatar = User.avatarPath + '/' + req.file.filename;
+                    // this is saving the path of the uploaded file into the avatar field in the user
+                }
+                user.save();
+                return res.redirect('back');
+            });
+        }
+
+        catch(err){
+            console.log('Error',err);
+            return res.redirect('back');
+        }
+
+
+
+
+
+
+
+    }else{
         return res.status(401).send('Unauthorized');
     }
-
 
 }
 

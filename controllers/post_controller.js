@@ -11,6 +11,7 @@ module.exports.create = async function(req,res){
 
         //checking if it is a AJAX request 
         if(req.xhr){
+            post = await post.populate('user', 'name').execPopulate();
             return res.status(200).json({
                 data:{
                     post:post
@@ -19,9 +20,6 @@ module.exports.create = async function(req,res){
             });
         }
 
-
-
-        req.flash('success','Post Published'); // flash messege
         return res.redirect('back');
 
     }catch(err){

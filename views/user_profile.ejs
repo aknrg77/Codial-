@@ -1,15 +1,16 @@
 <link rel ="stylesheet" href="/css/user_profile.css">
-
+<img src = "<%=profile_user.avatar%>" alt="<%=profile_user.name%>" style="width:200px;height:200px;">
         <h1>Codiel /<%= title %></h1>
         
 
         <%if (user.id == profile_user.id){%>
                 <!-- if user matches then show the form  -->
-                <form action="/users/update/<%=profile_user.id%>" method="POST">
+                <form action="/users/update/<%=profile_user.id%>" enctype = "multipart/form-data" method="POST">
+                        <!-- enctype = "multipart/form-data" is for uploading files -->
                         <input type ="text" name = "name" placeholder="Name" value="<%=profile_user.name%>" required>        
                         <input type ="email" name = "email" placeholder="Email" value="<%=profile_user.email%>" required>        
                         <input type ="submit" value="Update">
-                
+                        <input type = "file" name = "avatar" placeholder="profile picture">
                 </form>
                 
                 

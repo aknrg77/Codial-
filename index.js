@@ -40,6 +40,9 @@ app.use(cookieParser());
 
 //setting up the static file
 app.use(express.static('./assets'));
+///uploads/users/avatars/avatar-1573587655996 make the uploads path available to the browser
+app.use('/uploads',express.static(__dirname + '/uploads'));
+
 
 //extract styles and scripts from sub pages into the layout
 app.set("layout extractStyles",true);

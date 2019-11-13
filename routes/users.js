@@ -16,7 +16,6 @@ router.post('/update/:id',passport.checkAuthentication,usersController.update);
 
 
 
-
 router.get('/contact',usersController.contact);
 
 
