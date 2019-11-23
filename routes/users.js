@@ -33,7 +33,7 @@ router.post('/create',usersController.create);
 
 
 
-// to create-session (signin) use passport as a middleware to authnticate
+// to create-session (signin) use passport as a middleware to authenticate
 router.post('/create-session',passport.authenticate(
     'local',
     {failureRedirect : '/users/signin'}
@@ -42,5 +42,23 @@ router.post('/create-session',passport.authenticate(
 
 //creating a sign out route
 router.get('/signout',usersController.signout);
+
+
+
+//routing to google oauth to check valid user 
+router.get('/auth/google', passport.authenticate('google',{scope:['profile','email']}));
+
+// this is the URL in which it will recieve the data 
+
+router.get('/auth/google/callback', passport.authenticate('google',
+
+    {failureRedirect : '/users/signin'})
+    , usersController.createSession
+
+);
+
+
+
+
 
 module.exports = router ;

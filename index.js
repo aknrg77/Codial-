@@ -11,8 +11,14 @@ const db = require('./config/mongoose');
 
 //requiring the session cookie
 const session = require('express-session');
+// requiring passport and it's statergies (local , jwt)
 const passport = require('passport');
 const passportLocal = require('./config/passport-local-strategy');
+const passportJWT = require('./config/passport-jwt-stratergy');
+const googleStrategy = require('./config/passport-google-oauth2-strategy');
+
+
+//saving the users information (don't need to login ) after server restart
 const MongoStore = require('connect-mongo')(session);
 
 

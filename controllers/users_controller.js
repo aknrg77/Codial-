@@ -55,7 +55,7 @@ module.exports.update = async function(req,res){
 
 
                     user.avatar = User.avatarPath + '/' + req.file.filename;
-                    // this is saving the path of the uploaded file into the avatar field in the user
+                    // this is saving the path of the uploaded file into the avatar field in the user database
                 }
                 user.save();
                 return res.redirect('back');
