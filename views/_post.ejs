@@ -2,11 +2,25 @@
 <p>
     <%if(locals.user && locals.user.id == i.user.id){ %>  
     <small>
-            <a class="delete-post-button" href="/posts/destroy/<%= i._id%>">Delete Post</a>
+            <a class="delete-post-button" href="/posts/destroy/<%= i._id%>"><i class="fas fa-trash-alt"></i></a>
 
     </small>
     <%}%>
+    
     <%=i.content%>
+        <%if(locals.user){%>
+        <small>
+        <a class="like-post-button" data-likes ="<%=i.likes.length%>" href="/likes/toggle/?id=<%=i._id%>&type=Post"><i class="fas fa-thumbs-up"></i>
+        <%=i.likes.length%>
+        
+        </a>
+        <%}else{%>
+            <%=i.likes.length%><i class="fas fa-thumbs-up"></i>
+
+        <%}%>
+    
+        </small>
+        
     <br>
     <small>
             <%=i.user.name%>        
@@ -14,7 +28,7 @@
     </p>
 <div class="post-comments">
     <%if(locals.user){%>
-    <form action ='/comments/create' method="POST">
+    <form action ='/comments/create' id = "new-comment-form" method="POST">
             <input type ="text" name = "content" placholder="Type here to add Comment" required>
             <input type="hidden" name="postid" value="<%=i._id%>">
             <input type="submit" value="Add Comment">
@@ -22,8 +36,8 @@
     </form>
     <%}%>
 
-<div class = "post-comments-lists">
-    <ul id="post-comments-<%=i._id %>"
+<div id = "post-comments-lists">
+    <ul>
             
             <% for (comment of i.comments){%>
                    <%-include('_comment')-%>

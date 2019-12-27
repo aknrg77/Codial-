@@ -34,7 +34,54 @@
                 <%}%>
              
         </section>
+
+
+        <%if(locals.user){%>
+        <button class="open-button" onclick="openForm()">Chat</button>
+
+<div class="chat-popup" id="user-chat-box">
+  <div class="form-container" >
+    <h1>Chat</h1>
+
+    <label for="msg"><b>Message</b></label>
+
+    <ul id ="msg-list">
+
+        <li class = "other-msg">
+                <span></span>
+        </li>
+        <li class = "self-msg">
+                <span></span>
+        </li>
+
+
+    </ul>
+    <textarea placeholder="Type message.." id = "chat-message-input" name="msg" required></textarea>
+
+    <button id = "send-button" class="btn">Send</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+  </div>
+</div>
+
+<%}%>
+
+        <script src ="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
         <script src ="/js/home_posts.js"></script>
+        <script src ="/js/home_comments.js"></script>
+        <script src ="/js/chat_engine.js">
+                
+        </script>
+        <script>
+                
+
+
+
+                // obeserver(server) chat_sockets.io.js (config folder)
+                // client side       chat_engine.js (js folder)
+                <%if(locals.user){%>
+                new chatEngine('user-chat-box',"<%=locals.user.email%>");
+                <%}%>
+        </script>
 </div>
 
 
