@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/codiel_development', {
+const env = require('./environment');
+mongoose.connect(`mongodb://localhost/${env.db}`, {
 useUnifiedTopology: true,
 useNewUrlParser: true,
 }).then(() => console.log('DB Connected!')).catch(err => {

@@ -4,6 +4,12 @@ const app = express();
 const port = 8000;
 
 
+//importing environment file
+const env = require('./config/environment');
+const logger = require('morgan');
+require('./config/view-helpers')(app);
+
+
 // importing the ejs layout
 const expressLayout = require('express-ejs-layouts');
 const db = require('./config/mongoose');
@@ -37,28 +43,32 @@ http.listen(5000,function(){
 });
 
 //-----//
+const path = require('path');
 
 
+if(env.name=='development'){
 //using the scss middleware
 app.use(nodeSassMiddleware({
     //options
-    src: './assets/scss',
-    dest:'./assets/css',
+    src: path.join(__dirname, env.assetPath, '/scss'),
+    dest:path.join(__dirname, env.assetPath, '/css'),
     debug:true,
     outputStyle:'expanded',
     prefix:'/css'
 
 }));
+}
 
 
 app.use(express.urlencoded());
 app.use(cookieParser());
 
 //setting up the static file
-app.use(express.static('./assets'));
+app.use(express.static(__dirname+env.assetPath));  
 ///uploads/users/avatars/avatar-1573587655996 make the uploads path available to the browser
 app.use('/uploads',express.static(__dirname + '/uploads'));
 
+app.use(logger(env.morgan.mode,env.morgan.options));
 
 //extract styles and scripts from sub pages into the layout
 app.set("layout extractStyles",true);
@@ -80,7 +90,7 @@ app.set('views', './views');
 app.use(session({
     name: 'codial',
     //TODO change the secret before deployement in production mode
-    secret: 'something',
+    secret: env.sessionCookieKey,
     saveUninitialized:false,
     resave:false,
     cookie:{

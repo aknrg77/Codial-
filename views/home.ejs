@@ -1,4 +1,4 @@
-<link rel = "stylesheet" href="/css/home.css">
+<link rel = "stylesheet" href="<%=assetPath('css/home.css')%>">
 <div id="home-container">
         <section id ="feed-posts">
         
@@ -62,15 +62,17 @@
     <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
   </div>
 </div>
+</div>
 
 <%}%>
 
         <script src ="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
-        <script src ="/js/home_posts.js"></script>
-        <script src ="/js/home_comments.js"></script>
-        <script src ="/js/chat_engine.js">
+        <script src ="<%=assetPath('js/home_posts.js')%>"></script>
+        <script src ="<%=assetPath('js/home_comments.js')%>"></script>
+        <script src ="<%=assetPath('js/chat_engine.js')%>">
                 
         </script>
+        <% if(locals.user){ %>
         <script>
                 
 
@@ -78,10 +80,11 @@
 
                 // obeserver(server) chat_sockets.io.js (config folder)
                 // client side       chat_engine.js (js folder)
-                <%if(locals.user){%>
+                
                 new chatEngine('user-chat-box',"<%=locals.user.email%>");
-                <%}%>
+               
         </script>
-</div>
+        <% } %>
+
 
 
