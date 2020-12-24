@@ -26,8 +26,8 @@ const development = {
         port : 587,             //TLS most secure port
         secure : false, //true for 465 , false for other port 
         auth :{
-            user : 'aknrg627',
-            pass : 'Anurag@786'
+            user : '',
+            pass : ''
         }
     },
 
